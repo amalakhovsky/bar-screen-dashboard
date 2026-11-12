@@ -1,0 +1,17 @@
+{
+    "KPackageStructure": "Plasma/Wallpaper",
+    "KPlugin": {
+        "Id": "org.kde.barscreenlock",
+        "Name": "Image + bar screen clock",
+        "Description": "Lock screen wallpaper: an image on ordinary screens; on very wide bar screens, a quiet clock with the date and outside temperature.",
+        "License": "GPL-2.0-or-later",
+        "Version": "1.0",
+        "Icon": "preferences-desktop-wallpaper",
+        "Authors": [
+            {
+                "Name": "Andrey Malakhovsky"
+            }
+        ],
+        "Website": "https://github.com/amalakhovsky/bar-screen-dashboard"
+    }
+}

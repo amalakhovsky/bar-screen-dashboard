@@ -1,0 +1,82 @@
+:root {
+  --bg: #0a0c16;
+  --text: #e8ecf6;
+  --dim: #8f9bb8;
+  --accent: #3d8fe0;        /* azure, like the recoloured Kay wallpaper lines */
+  --track: rgba(255, 255, 255, 0.12);
+}
+html, body {
+  margin: 0; width: 100%; height: 100%; overflow: hidden;
+  background: var(--bg); color: var(--text);
+  font-family: "Noto Sans", sans-serif;
+  cursor: none; user-select: none;
+}
+canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+#viz  { opacity: 0; transition: opacity 3s ease; filter: brightness(0.8) saturate(0.9); }
+#idle { opacity: 1; transition: opacity 3s ease; }
+body.playing #viz  { opacity: 1; }
+body.playing #idle { opacity: 0; }
+/* Spectrum bars over the visualizer, under the text shade (so they fade out behind the text) */
+#bars { opacity: 0; transition: opacity 3s ease; }
+body.playing #bars { opacity: 1; }
+body.nobars #bars { display: none; }
+
+/* Darken the left side so the text reads over the visualizer */
+#shade {
+  position: absolute; inset: 0;
+  background: linear-gradient(90deg, rgba(8,10,20,0.94) 0%, rgba(8,10,20,0.82) 34%,
+                                     rgba(8,10,20,0.35) 58%, rgba(8,10,20,0) 75%);
+  /* Lighter along the bottom (below the text) so the bass bars next to the art stay visible */
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 72%, rgba(0,0,0,0.5) 100%);
+          mask-image: linear-gradient(180deg, #000 0%, #000 72%, rgba(0,0,0,0.5) 100%);
+}
+
+#info {
+  position: absolute; left: 48px; top: 48px; bottom: 48px; width: 1000px;
+  display: flex; gap: 40px; align-items: center;
+  transition: opacity 1.5s ease;
+}
+body.nothing #info { opacity: 0; }
+
+#art {
+  position: relative; flex: 0 0 384px; height: 384px; border-radius: 14px; overflow: hidden;
+  background: #151a2c; box-shadow: 0 10px 40px rgba(0,0,0,0.55);
+}
+#artBlur { position: absolute; inset: -30px; background-size: cover; background-position: center;
+           filter: blur(24px) brightness(0.55); }
+#artImg  { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+#art.none #artImg { display: none; }
+
+#text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 14px; }
+#player { font-size: 18px; color: var(--dim); letter-spacing: 0.08em; text-transform: uppercase; }
+#title {
+  font-size: 44px; font-weight: 700; line-height: 1.15;
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+}
+#artist { font-size: 28px; color: var(--dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#progress { margin-top: 10px; }
+#progress.hidden { visibility: hidden; }
+#bar  { height: 6px; border-radius: 3px; background: var(--track); overflow: hidden; }
+#fill { height: 100%; width: 0; background: var(--accent); border-radius: 3px; }
+#times { display: flex; justify-content: space-between; margin-top: 8px; font-size: 18px; color: var(--dim);
+         font-variant-numeric: tabular-nums; }
+body.paused #fill { background: var(--dim); }
+
+#clockSmall { position: absolute; right: 36px; top: 22px; display: flex; gap: 22px; align-items: baseline;
+              font-size: 34px; color: rgba(232,236,246,0.85);
+              font-variant-numeric: tabular-nums; text-shadow: 0 2px 10px rgba(0,0,0,0.7);
+              transition: opacity 1.5s ease; }
+#clockTime { font-weight: 700; }
+#temp { font-weight: 400; color: rgba(232,236,246,0.7); }
+#temp:empty { display: none; }
+#idleClock { position: absolute; left: 0; right: 0; top: 50%; transform: translateY(-50%); text-align: center;
+             opacity: 0; transition: opacity 2s ease; pointer-events: none; }
+#idleTime { font-size: 150px; font-weight: 200; letter-spacing: 0.02em; font-variant-numeric: tabular-nums;
+            color: rgba(232,236,246,0.85); }
+#idleDate { font-size: 30px; color: var(--dim); margin-top: -6px; }
+body.nothing #idleClock { opacity: 1; }
+body.nothing #clockSmall { opacity: 0; }
+
+#debug { position: absolute; right: 12px; bottom: 8px; font: 14px monospace; color: #9fb; display: none;
+         text-shadow: 0 1px 3px #000; }
+body.debug #debug { display: block; }

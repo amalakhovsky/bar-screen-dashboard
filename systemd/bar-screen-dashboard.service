@@ -1,0 +1,15 @@
+[Unit]
+Description=Bar screen dashboard (now playing + visualizer on a wide secondary screen)
+PartOf=graphical-session.target
+After=graphical-session.target plasma-plasmashell.service
+
+[Service]
+Type=simple
+EnvironmentFile=-%h/.config/bar-screen-dashboard/config.env
+ExecStartPre=-/usr/bin/python3 -I %h/.local/share/bar-screen-dashboard/lockshell.py --if-enabled
+ExecStart=/usr/bin/python3 -I %h/.local/share/bar-screen-dashboard/server.py
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=graphical-session.target
