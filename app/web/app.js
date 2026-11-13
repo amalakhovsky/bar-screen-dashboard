@@ -146,12 +146,26 @@ function updateProgress() {
 }
 setInterval(updateProgress, 250);
 
+// ?demo: made-up track and abstract cover art (for screenshots); audio stays live.
+const DEMO = {
+  status: "Playing", player: "spotify", title: "Track Title", artist: "Artist Name",
+  lengthUs: 245e6, positionUs: 92e6, sampledAt: Date.now(), rate: 1,
+  art: "data:image/svg+xml," + encodeURIComponent(
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">' +
+    '<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">' +
+    '<stop offset="0" stop-color="#1b2a6b"/><stop offset="1" stop-color="#7a3fa0"/></linearGradient></defs>' +
+    '<rect width="100" height="100" fill="url(#g)"/>' +
+    '<circle cx="62" cy="40" r="22" fill="#f2a65a" opacity=".85"/>' +
+    '<path d="M0 72 Q25 58 50 70 T100 66 V100 H0z" fill="#0d1236" opacity=".9"/></svg>'),
+};
+
 async function poll() {
   try {
     const q = new URLSearchParams({ preset: presetName, skipped: lastSkipped, audio: audioNote });
     const r = await fetch("/api/state?" + q, { cache: "no-store" });
     np = await r.json();
     if (params.get("force") === "playing" && np.title) np.status = "Playing";   // preview aid
+    if (params.has("demo")) Object.assign(np, DEMO);   // screenshots without real track info
     render();
     setTemp(np.temp);
     setHidden(!!np.hidden);

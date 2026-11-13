@@ -6,6 +6,8 @@ over a calm [Milkdrop](https://en.wikipedia.org/wiki/MilkDrop)-style visualizer 
 moves to whatever your computer is playing. When nothing is playing it shows a quiet
 clock with the date and outside temperature.
 
+![Dashboard on a 1920x480 bar screen while music plays](screenshots/playing.jpg)
+
 ## What it does
 
 - **Now playing** from any app that reports to the desktop (MPRIS): Spotify, browsers
@@ -64,7 +66,7 @@ To update, `git pull` and run `./install.sh` again. To remove, `./uninstall.sh`
 | `BAR_LAT`, `BAR_LON` | empty | Location for the temperature; empty = reuse the [Weather Glance](https://github.com/amalakhovsky/plasma-weather-glance) widget's location, if present |
 | `BAR_UNITS` | `auto` | `celsius`, `fahrenheit`, or `auto` (Weather Glance's setting, else your locale) |
 | `BAR_PORT` | `8765` | Local port (listens on 127.0.0.1 only) |
-| `BAR_QUERY` | empty | Page options: `bars=0` (no bars), `debug`, `force=playing`, `cycle=12` (preview presets quickly) |
+| `BAR_QUERY` | empty | Page options: `bars=0` (no bars), `debug`, `force=playing`, `cycle=12` (preview presets quickly), `demo` (made-up track and cover art, for screenshots) |
 
 The look (preset list, timing, brightness target, bar count) is in the `CFG` block at
 the top of `app/web/app.js`.
